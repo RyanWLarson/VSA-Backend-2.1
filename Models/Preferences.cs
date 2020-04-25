@@ -27,7 +27,7 @@ namespace Models
         public Boolean SummerPreference { get; set; }
         public int PreferredMathStart { get; set; }
         public int DepartmentID { get; set; }
-        public int CoreCountLastYear { get; set; }
+        public int CoreCountLastYear = 1;
         public int MaxQuarters { get; set; }
         public int SchoolId { get; set; }
 
