@@ -11,7 +11,6 @@ namespace ScheduleEvaluator.ConcreteCriterias
         const int MATH_DEPT = 54;
         public MathBreaks(double weight) : base(weight)
         {
-            throw new NotImplementedException();
         }
 
         public override double getResult(ScheduleModel s)
