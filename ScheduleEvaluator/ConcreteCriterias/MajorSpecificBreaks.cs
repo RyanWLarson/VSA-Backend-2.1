@@ -8,7 +8,7 @@ namespace ScheduleEvaluator.ConcreteCriterias
 
     // For the criterias that evaluate whether or not there are breaks
     // ask if there is a threshold for number of quarters that are a break?
-    class MajorSpecificBreaks : Criteria
+    public class MajorSpecificBreaks : Criteria
     {
         public MajorSpecificBreaks(double weight) : base(weight)
         {
@@ -37,7 +37,7 @@ namespace ScheduleEvaluator.ConcreteCriterias
                 
                 }
             }
-            return totalGap > 0 ? 0.0 : 1.0;
+            return (totalGap > 0 ? 0.0 : 1.0) * weight;
         }
 
         private Boolean hasMajorCourse(Quarter q, int deptID) {

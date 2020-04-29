@@ -6,7 +6,7 @@ namespace ScheduleEvaluator.ConcreteCriterias
 {
     using Models;
 
-    class TimeOfDay : Criteria
+    public class TimeOfDay : Criteria
     {
         public TimeOfDay(double weight) : base(weight)
         {
@@ -35,7 +35,7 @@ namespace ScheduleEvaluator.ConcreteCriterias
                 }
             }
             // May we want to change this binary return.
-            return numOutsideTimePref > 0 ? 0.0 : 1.0;
+            return (numOutsideTimePref > 0 ? 0.0 : 1.0) * weight;
         }
     }
 }
