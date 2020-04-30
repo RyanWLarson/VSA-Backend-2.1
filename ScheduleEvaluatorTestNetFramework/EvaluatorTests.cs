@@ -145,6 +145,65 @@ namespace ScheduleEvaluatorTestFramework
             Assert.AreEqual(0.0, result);
         }
 
+
+        [TestMethod, TestCategory("MaxQuarters")]
+        public void TestMaxQuartersValidSchedule()
+        {
+            ScheduleModel sm = new ScheduleModel
+            {
+                Quarters = new List<Quarter> {
+                    new Quarter {
+                        Id = "1"
+                    },
+                    new Quarter {
+                        Id = "2"
+                    },
+                    new Quarter {
+                        Id = "3"
+                    },
+                    new Quarter {
+                        Id = "4"
+                    }
+                },
+                PreferenceSet = new Preferences
+                {
+                    MaxQuarters = 4
+                }
+            };
+            Criteria mq = new MaxQuarters(1.0);
+            double result = mq.getResult(sm);
+            Assert.AreEqual(1.0, result);
+        }
+
+        [TestMethod, TestCategory("MaxQuarters")]
+        public void TestMaxQuartersInvalidSchedule()
+        {
+            ScheduleModel sm = new ScheduleModel
+            {
+                Quarters = new List<Quarter> {
+                    new Quarter {
+                        Id = "1"
+                    },
+                    new Quarter {
+                        Id = "2"
+                    },
+                    new Quarter {
+                        Id = "3"
+                    },
+                    new Quarter {
+                        Id = "4"
+                    }
+                },
+                PreferenceSet = new Preferences
+                {
+                    MaxQuarters = 3
+                }
+            };
+            Criteria mq = new MaxQuarters(1.0);
+            double result = mq.getResult(sm);
+            Assert.AreEqual(0.0, result);
+        }
+
         // These DB methods ARE NOT TESTED.
         private ScheduleModel getScheduleFromDB(int generatedPlanID)
         {
