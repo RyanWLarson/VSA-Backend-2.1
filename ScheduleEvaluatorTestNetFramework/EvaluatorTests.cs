@@ -9,6 +9,7 @@ using Models;
 using System.Data;
 using ScheduleEvaluator.ConcreteCriterias;
 using Newtonsoft.Json.Linq;
+using System.Threading.Tasks;
 
 namespace ScheduleEvaluatorTestFramework
 {
@@ -52,6 +53,20 @@ namespace ScheduleEvaluatorTestFramework
         public void TestConstructorValidSchema() {
             JObject criteria = JObject.Parse(File.ReadAllText("./../../../ScheduleEvaluator/JSONCriteriaWeights/TestCriteriaWeightsValid.json"));
             Evaluator eval = new Evaluator(criteria.ToString(), true);
+        }
+
+        [TestMethod, TestCategory("HTTP")]
+        public void TestHTTPRequest()
+        {
+            Evaluator eval = new Evaluator();
+            List<CourseNode> result;
+            Task.Run(async () =>
+            {
+                result = await eval.getCourseNetwork(42);
+                Assert.IsNotNull(result);
+            }).GetAwaiter().GetResult();
+            // Probably some better way to do this
+
         }
         
         [TestMethod, TestCategory("MathBreaks")]

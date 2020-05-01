@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Net.Http;
 
 // This class is the definition for the object that does the evaluation of schedules. A user
 // must instantiate this class, and then call the evaluate method by passing in a Schedule object.
@@ -11,7 +12,9 @@ namespace ScheduleEvaluator
 {
     using System.Diagnostics;
     using System.IO;
+    using System.Threading.Tasks;
     using Models;
+    using Newtonsoft.Json;
     using Newtonsoft.Json.Linq;
     using Newtonsoft.Json.Schema;
 
@@ -25,7 +28,7 @@ namespace ScheduleEvaluator
 
         // This field holds all of the criteria objects that are created by the Criteria factory.
         private Criteria[] criterias;
-
+        private HttpClient client;
         // Constructor for the evaluator. Creates all of the criteria objects and stores in criterias. 
         // For now I dont believe that the criterias should be mutable. 
         public Evaluator() {
@@ -41,7 +44,7 @@ namespace ScheduleEvaluator
                 Console.WriteLine("Error in creating Criterias: {0}", ag);
                 throw;
             }
-
+            client = new HttpClient();
             criterias = fact.Criterias;
         }
 
@@ -93,6 +96,7 @@ namespace ScheduleEvaluator
                 throw;
             }
             criterias = fact.Criterias;
+            client = new HttpClient();
         }
 
         // The bread and butter of the class. At first this method doesn't look like much, but
@@ -108,6 +112,22 @@ namespace ScheduleEvaluator
             }
             return result / totalWeight;
         }
-    
+        public async Task<List<CourseNode>> getCourseNetwork(int id) {
+            HttpClient client = new HttpClient();
+            HttpResponseMessage resp;
+            try
+            {
+                resp = await client.GetAsync(
+                   $"http://vaacoursenetwork.azurewebsites.net/v1/CourseNetwork?course={id}"
+                   );
+                return JsonConvert.DeserializeObject<List<CourseNode>>
+                    (await resp.Content.ReadAsStringAsync());
+            }
+            catch (HttpRequestException e) {
+                Console.WriteLine("\nException Caught During HTTP Request");
+                Console.WriteLine("Message: {0}", e.Message);
+            }
+            return null;
+        }
     }
 }
