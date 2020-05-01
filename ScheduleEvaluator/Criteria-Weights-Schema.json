@@ -33,7 +33,7 @@
             },
             "Type": {
               "type": "string",
-              "enum": [ "Advisor", "Student", "Admin?" ],
+              "enum": [ "Advisor", "Student"],
               "description": "Who Defined this criteria? Must be one of the type defined in the enumeration"
             },
             "Weight": {
@@ -70,4 +70,5 @@
     }
   ]
 }
+  Add another meta data tag that gives a list of permission
 */
