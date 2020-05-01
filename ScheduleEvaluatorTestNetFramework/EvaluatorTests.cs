@@ -145,9 +145,6 @@ namespace ScheduleEvaluatorTestFramework
             Assert.AreEqual(0.0, result);
         }
 
-<<<<<<< HEAD
-=======
-
         [TestMethod, TestCategory("MaxQuarters")]
         public void TestMaxQuartersValidSchedule()
         {
@@ -206,7 +203,6 @@ namespace ScheduleEvaluatorTestFramework
             Assert.AreEqual(0.0, result);
         }
 
->>>>>>> cac7ca4b9dc877b573d1ea6b5d9c3ca436d66df5
         // These DB methods ARE NOT TESTED.
         private ScheduleModel getScheduleFromDB(int generatedPlanID)
         {
