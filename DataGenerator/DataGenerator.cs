@@ -105,7 +105,8 @@ namespace DataGenerator
                 var parameterQuery = $"select ParameterSetId from GeneratedPlan where GeneratedPlanId={scheduleId}";
                 var parameterId = (int)connection.ExecuteToDT(parameterQuery).Rows[0]["ParameterSetId"];
 
-                var parameterSetQuery = $"select ParameterSet.MajorID, SchoolID, MaxNumberOfQuarters, NumberCoreCoursesPerQuarter, CreditsPerQuarter, SummerPreference, DepartmentId from ParameterSet join Major on ParameterSet.MajorID = Major.MajorID" +
+                var parameterSetQuery = $"select ParameterSet.MajorID, SchoolID, TimePeriod, MaxNumberOfQuarters, NumberCoreCoursesPerQuarter, CreditsPerQuarter, SummerPreference, DepartmentId from ParameterSet join Major on ParameterSet.MajorID = Major.MajorID" +
+                                        $" join TimePreference on TimePreference.TimePreferenceID = ParameterSet.TimePreferenceID"+ 
                                         $" where ParameterSetId = {parameterId}";
                 var parameterSetResult = connection.ExecuteToDT(parameterSetQuery);
 

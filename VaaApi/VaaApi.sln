@@ -16,8 +16,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ApiCore", "ApiCore\ApiCore.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ScheduleEvaluator", "..\ScheduleEvaluator\ScheduleEvaluator.csproj", "{42C65954-791A-437D-BDDB-5611AA0B0ABF}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ScheduleEvaluatorTest", "..\ScheduleEvaluatorTest\ScheduleEvaluatorTest.csproj", "{4D9944D8-E045-4D77-B186-BA1B05C89582}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Models", "..\Models\Models.csproj", "{99F2B340-C755-407F-BFFA-D3CA1EC56137}"
 EndProject
 Global
