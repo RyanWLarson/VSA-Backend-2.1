@@ -112,7 +112,8 @@ namespace ScheduleEvaluator
             }
             return result / totalWeight;
         }
-        public async Task<List<CourseNode>> getCourseNetwork(int id) {
+
+        public async Task<List<CourseNode>> getCourseNetwork(string id) {
             HttpClient client = new HttpClient();
             HttpResponseMessage resp;
             try

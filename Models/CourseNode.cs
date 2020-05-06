@@ -5,7 +5,7 @@ namespace Models
     public class CourseNode
     {
         #region Structure Variables
-        public int courseID { get; set; } //Represents the Unique ID number for a course
+        public string courseID { get; set; } //Represents the Unique ID number for a course
         public int credits { get; set; }
         public int groupID { get; set; } //Represents the Group ID for the Course
         public int prerequisiteID { get; set; } //Represents the Unique ID number for a Prerequisite Course
@@ -18,7 +18,7 @@ namespace Models
         #region Default Constructor
         public CourseNode()
         {
-            courseID = 0;
+            courseID = "0";
             groupID = 0;
             prerequisiteID = 0;
             prereqs = null;
