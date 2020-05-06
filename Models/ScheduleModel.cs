@@ -85,7 +85,7 @@ namespace Models
         public string Rating { get; set; }
     }
 
-    public partial class Quarter
+    public partial class Quarter : IComparable
     {
         [JsonProperty("id")]
         public string Id { get; set; }
@@ -101,6 +101,39 @@ namespace Models
         public List<Course> Courses { get; set; }
 
         public int QuarterKey { get; set; }
+
+        // Allows Quarters to be sorted chronologically
+        public int CompareTo(object other)
+        {
+            Quarter q = other as Quarter;
+            if (this.Year < q.Year)
+            {
+                return -1;
+            }
+            else if (this.Year > q.Year)
+            {
+                return 1;
+            }
+
+            var quarterTitle = new Dictionary<string, int>()
+            {
+                {"Winter", 0},
+                {"Spring", 1},
+                {"Summer", 2},
+                {"Fall", 3}
+            };
+            
+            if (quarterTitle[this.Title] < quarterTitle[q.Title])
+            {
+                return -1;
+            }
+            else if (quarterTitle[this.Title] > quarterTitle[q.Title])
+            {
+                return 1;
+            }
+
+            return 0;
+        }
     }
 
     public partial class Course
