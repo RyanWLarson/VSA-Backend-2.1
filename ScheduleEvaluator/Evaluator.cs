@@ -12,7 +12,6 @@ namespace ScheduleEvaluator
 {
     using System.Diagnostics;
     using System.IO;
-    using System.Threading.Tasks;
     using Models;
     using Newtonsoft.Json;
     using Newtonsoft.Json.Linq;
@@ -111,24 +110,6 @@ namespace ScheduleEvaluator
                 totalWeight += c.weight;
             }
             return result / totalWeight;
-        }
-
-        public async Task<List<CourseNode>> getCourseNetwork(string id) {
-            HttpClient client = new HttpClient();
-            HttpResponseMessage resp;
-            try
-            {
-                resp = await client.GetAsync(
-                   $"http://vaacoursenetwork.azurewebsites.net/v1/CourseNetwork?course={id}"
-                   );
-                return JsonConvert.DeserializeObject<List<CourseNode>>
-                    (await resp.Content.ReadAsStringAsync());
-            }
-            catch (HttpRequestException e) {
-                Console.WriteLine("\nException Caught During HTTP Request");
-                Console.WriteLine("Message: {0}", e.Message);
-            }
-            return null;
         }
     }
 }

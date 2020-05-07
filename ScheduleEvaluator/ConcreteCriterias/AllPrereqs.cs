@@ -3,9 +3,12 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 
+
 namespace ScheduleEvaluator.ConcreteCriterias
 {
+    using System.Net.Http;
     using Models;
+    using Newtonsoft.Json;
 
     public class AllPrereqs : Criteria
     {
@@ -48,7 +51,7 @@ namespace ScheduleEvaluator.ConcreteCriterias
             List<CourseNode> prereqs = null;
             Task.Run(async() =>
             {
-                prereqs = await e.getCourseNetwork(courseId);
+                prereqs = await getCourseNetwork(courseId);
             }).GetAwaiter().GetResult();
 
             if (prereqs == null) throw new Exception("Could not get CourseNetwork");
@@ -59,6 +62,26 @@ namespace ScheduleEvaluator.ConcreteCriterias
                 if (!complete.Contains(cn.courseID)) return false;
             }
             return true;
+        }
+
+        public async Task<List<CourseNode>> getCourseNetwork(string id)
+        {
+            HttpClient client = new HttpClient();
+            HttpResponseMessage resp;
+            try
+            {
+                resp = await client.GetAsync(
+                   $"http://vaacoursenetwork.azurewebsites.net/v1/CourseNetwork?course={id}"
+                   );
+                return JsonConvert.DeserializeObject<List<CourseNode>>
+                    (await resp.Content.ReadAsStringAsync());
+            }
+            catch (HttpRequestException e)
+            {
+                Console.WriteLine("\nException Caught During HTTP Request");
+                Console.WriteLine("Message: {0}", e.Message);
+            }
+            return null;
         }
     }
 }

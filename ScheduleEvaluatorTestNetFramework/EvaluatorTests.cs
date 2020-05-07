@@ -58,11 +58,11 @@ namespace ScheduleEvaluatorTestFramework
         [TestMethod, TestCategory("HTTP")]
         public void TestHTTPRequest()
         {
-            Evaluator eval = new Evaluator();
+            AllPrereqs eval = new AllPrereqs(1.0);
             List<CourseNode> result;
             Task.Run(async () =>
             {
-                result = await eval.getCourseNetwork(42);
+                result = await eval.getCourseNetwork(42.ToString());
                 Assert.IsNotNull(result);
             }).GetAwaiter().GetResult();
             // Probably some better way to do this
