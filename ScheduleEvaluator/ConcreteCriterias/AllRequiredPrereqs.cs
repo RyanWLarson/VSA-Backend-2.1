@@ -2,13 +2,16 @@
 using System.Collections.Generic;
 using System.Text;
 
+
 namespace ScheduleEvaluator.ConcreteCriterias
 {
     using Models;
 
-    class AllPrereqs : Criteria
+    public class AllPrereqs : Criteria
     {
-        public AllPrereqs(double weight) : base(weight) {
+
+        public AllPrereqs(double weight) : base(weight)
+        {
             throw new NotImplementedException();
         }
 

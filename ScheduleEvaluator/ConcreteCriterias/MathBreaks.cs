@@ -6,7 +6,7 @@ namespace ScheduleEvaluator.ConcreteCriterias
 {
     using Models;
 
-    class MathBreaks : Criteria
+    public class MathBreaks : Criteria
     {
         const int MATH_DEPT = 54;
         public MathBreaks(double weight) : base(weight)
@@ -38,7 +38,7 @@ namespace ScheduleEvaluator.ConcreteCriterias
 
                 }
             }
-            return totalGap > 0 ? 0.0 : 1.0;
+            return (totalGap > 0 ? 0.0 : 1.0) * weight;
         }
 
         private Boolean hasMathCourse(Quarter q)

@@ -9,9 +9,9 @@ namespace ScheduleEvaluator
 {
     using Models;
 
-    abstract class Criteria
+    public abstract class Criteria
     {
-        private readonly double weight;
+        public readonly double weight;
         public Criteria(double weight) {
             this.weight = weight;
         }
