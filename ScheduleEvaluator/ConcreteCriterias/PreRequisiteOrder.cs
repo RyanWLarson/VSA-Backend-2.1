@@ -11,11 +11,8 @@ namespace ScheduleEvaluator.ConcreteCriterias
 
     public class PreRequisiteOrder : Criteria
     {
-        private Evaluator e;
-
         public PreRequisiteOrder(double weight) : base(weight)
         {
-            e = new Evaluator();
         }
 
         public override double getResult(ScheduleModel s)
@@ -85,4 +82,4 @@ namespace ScheduleEvaluator.ConcreteCriterias
         }
     }
 }
-}
+

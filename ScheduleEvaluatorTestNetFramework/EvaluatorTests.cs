@@ -58,7 +58,7 @@ namespace ScheduleEvaluatorTestFramework
         [TestMethod, TestCategory("HTTP")]
         public void TestHTTPRequest()
         {
-            AllPrereqs eval = new AllPrereqs(1.0);
+            PreRequisiteOrder eval = new PreRequisiteOrder(1.0);
             List<CourseNode> result;
             Task.Run(async () =>
             {
