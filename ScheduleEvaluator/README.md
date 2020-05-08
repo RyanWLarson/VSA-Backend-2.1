@@ -52,7 +52,7 @@ _(All of the criteria outlined below has been derived from the Weak Labeling Cri
 
 | Criteria            | Explanation                                                  |
 | ------------------- | :----------------------------------------------------------- |
-| AllPrereqs          | Validates that all prerequisites are satisfied for each course. |
+| AllRequiredPrereqs  | Validates that all required degree prerequisites are included in a schedule.|
 | CoreClassesLastYear | Validates that the number of core classes scheduled for the last quarter is at or below the student preference. |
 | CoreCreditsAQuarter | Validates that the number of core credits taken each quarter are at or below the student preference. |
 | ElectiveRelevancy   | Validates that the electives taken are relevant to major course work? |
