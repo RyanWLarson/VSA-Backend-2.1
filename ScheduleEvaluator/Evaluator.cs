@@ -31,8 +31,8 @@ namespace ScheduleEvaluator
         // Constructor for the evaluator. Creates all of the criteria objects and stores in criterias. 
         // For now I dont believe that the criterias should be mutable. 
         public Evaluator() {
-            CritTyp[] criteriaTypes = { CritTyp.CoreCreditsAQuarter, CritTyp.MaxQuarters };
-            double[] weights = { 1.0, 1.0 };
+            CritTyp[] criteriaTypes = { CritTyp.CoreCreditsAQuarter, CritTyp.MaxQuarters, CritTyp.TimeOfDay, CritTyp.CoreClassesLastYear, CritTyp.PreRequisiteOrder, CritTyp.MathBreaks, CritTyp.MajorSpecificBreaks, CritTyp.EnglishStart };
+            double[] weights = { 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0 };
             CriteriaFactory fact;
             try
             {

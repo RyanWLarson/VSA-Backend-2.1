@@ -92,7 +92,7 @@ namespace DataGenerator
             var schedule = new List<int>() { };
             var connection = new DBConnection();
             var eval = new Evaluator();
-            var scheduleQuery = $"select GeneratedPlanId from GeneratedPlan";
+            var scheduleQuery = $"select GeneratedPlanId from GeneratedPlan where GeneratedPlanId > 1052";
             var schedules = connection.ExecuteToDT(scheduleQuery);
             foreach (DataRow schedulesRow in schedules.Rows)
             {
