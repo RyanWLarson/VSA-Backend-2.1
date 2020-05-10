@@ -11,8 +11,10 @@ namespace ScheduleEvaluator.ConcreteCriterias
 
     public class PreRequisiteOrder : Criteria
     {
+        HttpClient client;
         public PreRequisiteOrder(double weight) : base(weight)
         {
+            client = new HttpClient();
         }
 
         public override double getResult(ScheduleModel s)
@@ -63,7 +65,6 @@ namespace ScheduleEvaluator.ConcreteCriterias
 
         public async Task<List<CourseNode>> getCourseNetwork(string id)
         {
-            HttpClient client = new HttpClient();
             HttpResponseMessage resp;
             try
             {
@@ -71,6 +72,25 @@ namespace ScheduleEvaluator.ConcreteCriterias
                    $"http://vaacoursenetwork.azurewebsites.net/v1/CourseNetwork?course={id}"
                    );
                 return JsonConvert.DeserializeObject<List<CourseNode>>
+                    (await resp.Content.ReadAsStringAsync());
+            }
+            catch (HttpRequestException e)
+            {
+                Console.WriteLine("\nException Caught During HTTP Request");
+                Console.WriteLine("Message: {0}", e.Message);
+            }
+            return null;
+        }
+
+        public async Task<Dictionary<int, List<CourseNode>>> getCourseNetworks(List<int> courses) {
+            HttpResponseMessage resp;
+            string jsonInput = JsonConvert.SerializeObject(courses);
+            try
+            {
+                resp = await client.GetAsync(
+                   $"http://vaacoursenetwork.azurewebsites.net/v1/GetMultipleCourses?input={jsonInput}"
+                   );
+                return JsonConvert.DeserializeObject<Dictionary<int, List<CourseNode>>>
                     (await resp.Content.ReadAsStringAsync());
             }
             catch (HttpRequestException e)
