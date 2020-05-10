@@ -4,42 +4,77 @@ for the API. This page also describes the caching mechanism used to store the co
 on the locally on the server side machine.
 
 ## Methods
-The only method for this API is the GET method with one parameter. An example of a call to this 
-endpoint are as follow:
+There are two methods for this API. Both are GET methods; one returns a Pre-requisite graph for one course and the other returns a hash map of multiple Pre-requisite graphs. 
 
-* The curl command: (Make sure to change the localhost name to the actual DNS when deployed.)
+### CourseNetwork
 
-```
-curl -X GET "https://localhost:44390/v1/CourseNetwork?course={CourseID}" -H "accept: text/plain"
+Performing a GET command on this route, returns one pre-requisite graph for the given course. 
+
+* The curl command: 
+
+```shell
+curl -X GET "http://vaacoursenetwork.azurewebsites.net/v1/CourseNetwork?course={CourseID}" -H "accept: text/plain"
 ```
 
 * The HTTP URL:
 
-```
-https://localhost:44390/v1/CourseNetwork?course={CourseID}
+```shell
+http://vaacoursenetwork.azurewebsites.net/v1/CourseNetwork?course={CourseID}
 ```
 
 The `{CourseID}` in both lines are the user defined parameter, where the course ID is a valid ID stored in the VSADev database. (Which at the time is the database that this API pulls its resources from.)
 
-### Return Value
+#### Return Value
 
 The return value of the GET Method is a JSON object that outlines an adjacency list of all the prerequisites for the given course ID.
 
 To be able to use the JSON object returned from the API the receiving code must have access to CourseNode.cs. This is vital since the way you unpackage the data is by:
 
-
-
 `courseNetwork = JsonConvert.DeserializeObject<List<CourseNode>>(allCourses);`
-
-
 
 where `allcourses ` is the value returned from the API.
 
+### GetMultipleCourses
 
+Performing a GET command on this route, returns a hash map of pre-requisite graph for the given course.
+
+* The curl command:
+
+```shell
+curl -X GET "http://vaacoursenetwork.azurewebsites.net/v1/GetMultipleCourses?input={CourseIDs}" -H "accept: text/plain"
+```
+
+* The HTTP URL:
+
+```shell
+http://vaacoursenetwork.azurewebsites.net/v1/GetMultipleCourses?input={CourseIDs}
+```
+
+#### Input Value
+
+The input value for this method is a Json string that resembles a `List<int>>`. The value the method expects is as follows:
+
+```csharp
+List<int> listofCourseIds = new List<int>();
+// Fill the list with course Ids you want the pre-requisite network for.
+string input = JsonConver.SerializeObject(listOfCourseIds);
+```
+
+#### Return Value
+
+The return value of the GET method is a JSON object that outlines a hash map of adjacency lists of all the pre-requisites for all the course IDs given. 
+
+To be able to the JSON object, similar to the return value of the CourseNetwork GET method, there must be access to CourseNode.cs. 
+
+`courseNetworks = JsonConver.DeserializeObject<Dictionary<List<CourseNode>>(allcourses);`
+
+where `allcourses` is the value returned from the API.
+
+### CourseNode.cs
 
 The design of this object is heavily influenced by the object structure of the CourseNode.cs in the Scheduler CS project and the Course Network CS project. 
 
-_If you want to understand more of the underlying structure of the return value please refer to CourseNode.cs here [VSA-Backend](https://github.com/VSAResearchGroup/VSA-Backend-2.1/blob/master/Algorithm-2.0-master/CourseNode.cs)
+_If you want to understand more of the underlying structure of the return value please refer to CourseNode.cs here [VSA-Backend](https://github.com/VSAResearchGroup/VSA-Backend-2.1/blob/master/Algorithm-2.0-master/CourseNode.cs)_
 
 ### Caching 
 
