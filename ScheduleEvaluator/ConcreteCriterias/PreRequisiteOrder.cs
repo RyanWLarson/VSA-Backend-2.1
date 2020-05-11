@@ -27,6 +27,26 @@ namespace ScheduleEvaluator.ConcreteCriterias
 
             int invalidCourses = 0;
 
+            Dictionary<int, List<CourseNode>> allCourses = null;    // CourseNetwork API output
+            List<int> courses = new List<int>();                    // CourseNetwork API input
+
+            // Prepare input list of all courses for CourseNetwork API
+            foreach (Quarter q in quarters)
+            {
+                foreach (Course c in q.Courses)
+                {
+                    courses.Add(Int32.Parse(c.Id));
+                }
+            }
+
+            // Get CourseNodes for each course in the schedule
+            Task.Run(async () =>
+            {
+                allCourses = await getCourseNetworks(courses);
+            }).GetAwaiter().GetResult();
+
+            if (allCourses == null) throw new Exception("Could not get CourseNetwork");
+
             foreach (Quarter q in quarters)
             {
                 // Iterate over courses twice to concurrent classes from being
@@ -34,7 +54,7 @@ namespace ScheduleEvaluator.ConcreteCriterias
                 foreach (Course c in q.Courses)
                 {
                     // First check if prereqs are met
-                    if (!verifyPrereqs(c.Id, completedCourses)) invalidCourses++;
+                    if (!verifyPrereqs(c.Id, completedCourses, allCourses)) invalidCourses++;
                 }
 
                 // Then add to completed courses
@@ -45,22 +65,37 @@ namespace ScheduleEvaluator.ConcreteCriterias
         }
 
         // Verifies completion of a course's prereqs
-        private bool verifyPrereqs(string courseId, HashSet<string> complete)
+        private bool verifyPrereqs(string cId, HashSet<string> complete, Dictionary<int, List<CourseNode>> cn)
         {
             List<CourseNode> prereqs = null;
-            Task.Run(async () =>
-            {
-                prereqs = await getCourseNetwork(courseId);
-            }).GetAwaiter().GetResult();
-
-            if (prereqs == null) throw new Exception("Could not get CourseNetwork");
+            if (!cn.TryGetValue(Int32.Parse(cId), out prereqs)) return false;
 
             // Verify that each course's prereqs have been completed
-            foreach (CourseNode cn in prereqs)
+            foreach (CourseNode course in prereqs)
             {
-                if (!complete.Contains(cn.courseID)) return false;
+                if (!complete.Contains(course.courseID)) return false;
             }
             return true;
+        }
+
+        public async Task<Dictionary<int, List<CourseNode>>> getCourseNetworks(List<int> courses)
+        {
+            HttpResponseMessage resp;
+            string jsonInput = JsonConvert.SerializeObject(courses);
+            try
+            {
+                resp = await client.GetAsync(
+                   $"http://vaacoursenetwork.azurewebsites.net/v1/GetMultipleCourses?input={jsonInput}"
+                   );
+                return JsonConvert.DeserializeObject<Dictionary<int, List<CourseNode>>>
+                    (await resp.Content.ReadAsStringAsync());
+            }
+            catch (HttpRequestException e)
+            {
+                Console.WriteLine("\nException Caught During HTTP Request");
+                Console.WriteLine("Message: {0}", e.Message);
+            }
+            return null;
         }
 
         public async Task<List<CourseNode>> getCourseNetwork(string id)
@@ -72,25 +107,6 @@ namespace ScheduleEvaluator.ConcreteCriterias
                    $"http://vaacoursenetwork.azurewebsites.net/v1/CourseNetwork?course={id}"
                    );
                 return JsonConvert.DeserializeObject<List<CourseNode>>
-                    (await resp.Content.ReadAsStringAsync());
-            }
-            catch (HttpRequestException e)
-            {
-                Console.WriteLine("\nException Caught During HTTP Request");
-                Console.WriteLine("Message: {0}", e.Message);
-            }
-            return null;
-        }
-
-        public async Task<Dictionary<int, List<CourseNode>>> getCourseNetworks(List<int> courses) {
-            HttpResponseMessage resp;
-            string jsonInput = JsonConvert.SerializeObject(courses);
-            try
-            {
-                resp = await client.GetAsync(
-                   $"http://vaacoursenetwork.azurewebsites.net/v1/GetMultipleCourses?input={jsonInput}"
-                   );
-                return JsonConvert.DeserializeObject<Dictionary<int, List<CourseNode>>>
                     (await resp.Content.ReadAsStringAsync());
             }
             catch (HttpRequestException e)
