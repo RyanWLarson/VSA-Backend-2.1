@@ -38,7 +38,7 @@ namespace Scheduler
         [JsonProperty]
         private string SummerPreference { get; set; }
         [JsonProperty]
-        private int EnrollmentType { get; set; }
+        private int EnrollmentTypeID { get; set; }
         #endregion
 
         #region Getters
@@ -84,8 +84,9 @@ namespace Scheduler
         }
         public int getEnrollment()
         {
-            return EnrollmentType;
+            return EnrollmentTypeID;
         }
+
         #endregion
     }
 }

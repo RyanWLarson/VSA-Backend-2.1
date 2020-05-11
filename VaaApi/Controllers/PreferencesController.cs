@@ -35,8 +35,5 @@ namespace VaaApi.Controllers
 
         }
 
-        
-    }
-
-    
+    }    
 }
