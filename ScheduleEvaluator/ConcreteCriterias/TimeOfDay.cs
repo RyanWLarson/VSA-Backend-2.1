@@ -21,10 +21,12 @@ namespace ScheduleEvaluator.ConcreteCriterias
             if (string.Equals(timePreference, "Any")) return weight;
 
             int numOutsideTimePref = 0;
+            int totalCourses = 0;
             foreach (Quarter q in s.Quarters)
             {
                 foreach (Course c in q.Courses)
                 {
+                    totalCourses++;
                     // Compares time of each course in the ScheduleModel to the
                     // time preference of its PreferenceSet; increments count of
                     // how many courses don't align with time preference.
@@ -35,7 +37,7 @@ namespace ScheduleEvaluator.ConcreteCriterias
                 }
             }
             // May we want to change this binary return.
-            return (numOutsideTimePref > 0 ? 0.0 : 1.0) * weight;
+            return (1 - (numOutsideTimePref / totalCourses)) * weight;
         }
     }
 }
