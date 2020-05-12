@@ -18,7 +18,7 @@ namespace ScheduleEvaluator.ConcreteCriterias
             string timePreference = s.PreferenceSet.TimePreference;
 
             // If time preference is set to "Any", this criterion passes
-            if (string.Equals(timePreference, "Any")) return 1.0;
+            if (string.Equals(timePreference, "Any")) return weight;
 
             int numOutsideTimePref = 0;
             foreach (Quarter q in s.Quarters)
