@@ -30,10 +30,12 @@ namespace Models
         public int CoreCountLastYear = 1;
         public int MaxQuarters { get; set; }
         public int SchoolId { get; set; }
+        public List<string> RequiredCourses { get; set; }
 
         public static Preferences ConvertFromDatabase(DataTable results, int id)
         {
             var pref = new Preferences();
+            pref.RequiredCourses = new List<string>();
             foreach (DataRow row in results.Rows)
             {
                 var major = (int)row["MajorId"];
@@ -56,6 +58,10 @@ namespace Models
                 if (row["DepartmentId"] != DBNull.Value)
                 {
                     department = (int)row["DepartmentId"];
+                }
+                if (row["CourseID"] != DBNull.Value)
+                {
+                    pref.RequiredCourses.Add((string)row["CourseID"]);
                 }
                 pref.MaxQuarters = maxNumQuarter;
                 pref.MajorID = major;
