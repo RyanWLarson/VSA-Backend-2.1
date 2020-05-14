@@ -15,7 +15,7 @@ namespace Scheduler.Contracts
         public List<Machine> Courses { get; set; }
         public string SchedulerName { get; set; }
         public OpenShopGASchedulerSettings ScheduleSettings { get; set; }
-        public int Rating { get; set; }
+        public double Rating { get; set; }
 
         public ScheduleModel ConvertToScheduleModel()
         {
@@ -43,8 +43,9 @@ namespace Scheduler.Contracts
                     foreach (var course in quarter)
                     {
                         var description = course.GetCurrentJobProcessing().GetID().ToString();
+                        int departmentId = course.GetCurrentJobProcessing().GetDepartmentID();
                         quarterItem.Courses.Add(new Course()
-                            {Description = description, Id = description, Title = description});
+                            {Description = description, Id = description, Title = description, DepartmentID = departmentId});
 
                     }
                 }

@@ -20,16 +20,19 @@ namespace ScheduleEvaluator.ConcreteCriterias
             // guess is that we can evaluate if a course is an english course by
             // checking against Department ID. From my understanding this D-ID would
             // change based on college.
-            foreach (Quarter q in s.Quarters) {
+            var currentquarter = 0;
+            foreach (Quarter q in s.Quarters)
+            {
+                currentquarter++;
                 foreach (Course c in q.Courses) {
-                    if (c.DepartmentID == ENGLISH_DEPARTMENT) {
-                        return (Int32.Parse(c.Description) == s.PreferenceSet.PreferredEnglishStart ?
-                            1.0 : 0.0) * weight;
+                    if (c.DepartmentID == ENGLISH_DEPARTMENT)
+                    {
+                        if (currentquarter > 1) return 0;
                     }
                 }
             }
             // No english courses or school with dept ID that is not in the consts
-            return 0.0;
+            return 1;
         }
     }
 }

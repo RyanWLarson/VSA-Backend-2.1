@@ -61,6 +61,7 @@ namespace Models
                 var quarter = (int)row["QuarterID"];
                 var year = (int)row["YearID"];
                 var courseId = (int)row["CourseId"];
+                var departmentId = (int) row["DepartmentID"];
                 var quarterItem = model.Quarters.FirstOrDefault(s => s.Id == $"{year}{quarter}" && s.Year == year);
                 if (quarterItem == null)
                 {
@@ -72,7 +73,7 @@ namespace Models
                 {
                     quarterItem.Courses = new List<Course>();
                 }
-                quarterItem.Courses.Add(new Course() { Description = courseName + $"({courseId})", Id = courseName, Title = courseName + $"({courseId})" });
+                quarterItem.Courses.Add(new Course() { Description = courseName + $"({courseId})", Id = courseId.ToString(), Title = courseName + $"({courseId})", DepartmentID = departmentId});
             }
 
             model.PreferenceSet = preferences;
@@ -115,19 +116,16 @@ namespace Models
                 return 1;
             }
 
-            var quarterTitle = new Dictionary<string, int>()
-            {
-                {"Winter", 0},
-                {"Spring", 1},
-                {"Summer", 2},
-                {"Fall", 3}
-            };
-            
-            if (quarterTitle[this.Title] < quarterTitle[q.Title])
+            var otherQuarterStr = q.Title.Split('-')[1];
+            var thisQuarterStr = this.Title.Split('-')[1];
+            var thisQuarter = Int32.Parse(thisQuarterStr);
+            var otherQuarter = Int32.Parse(otherQuarterStr);
+
+            if (thisQuarter < otherQuarter)
             {
                 return -1;
             }
-            else if (quarterTitle[this.Title] > quarterTitle[q.Title])
+            else if (thisQuarter > otherQuarter)
             {
                 return 1;
             }

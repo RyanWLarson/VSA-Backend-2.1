@@ -28,7 +28,6 @@ namespace ScheduleEvaluator.ConcreteCriterias
                     
                     Quarter nextQuarter = q;
 
-                   
                     int prevQID = Int32.Parse(prevQuarter.Id);
                     int nextQID = Int32.Parse(nextQuarter.Id);
                     if (prevQID + 1 != nextQID) 
