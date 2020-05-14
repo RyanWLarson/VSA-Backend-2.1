@@ -158,7 +158,7 @@ namespace Scheduler.Algorithms
 
         protected void InitDegreePlan()
         {
-            string query = "SELECT arc.CourseID as CID, c.MaxCredit as Credits " +
+            string query = "SELECT arc.CourseID as CID, c.MaxCredit, c.DepartmentID as Credits " +
                  "FROM AdmissionRequiredCourses as arc " +
                  "LEFT JOIN Course as c ON c.CourseID = arc.CourseID " +
                  "WHERE MajorID = " + StudentPreferences.getMajor() + " and SchoolID = " + StudentPreferences.getSchool();
@@ -176,7 +176,7 @@ namespace Scheduler.Algorithms
             foreach (DataRow row in dt.Rows)
             {
                 // Need to store more information that we get from the DT
-                Job job = new Job((int)row.ItemArray[0], (int)row.ItemArray[1], CORE_CLASS);
+                Job job = new Job((int)row.ItemArray[0], (int)row.ItemArray[1], CORE_CLASS, (int)row.ItemArray[2]);
                 courseNums.Add(job);
             }
             RequiredCourses = new DegreePlan(courseNums);
@@ -207,7 +207,7 @@ namespace Scheduler.Algorithms
 
             // If we know the school ID. Then we have what looks like an average of 300 classes less.
             //string oldquery = "select CourseID, StartTimeID, EndTimeID, DayID, QuarterID, SectionID from CourseTime order by CourseID ASC;";
-            string query = "SELECT ct.CourseID, StartTimeID, EndTimeID, DayID, QuarterID, ct.SectionID, c.MaxCredit " +
+            string query = "SELECT ct.CourseID, StartTimeID, EndTimeID, DayID, QuarterID, ct.SectionID, c.MaxCredit, c.DepartmentID " +
                 "FROM CourseTime as ct " +
                 "LEFT JOIN Course as c ON c.CourseID = ct.CourseID " +
                 "ORDER BY ct.CourseID ASC";
@@ -249,6 +249,7 @@ namespace Scheduler.Algorithms
                 quarter = (int)dr.ItemArray[4];
                 section = (int)dr.ItemArray[5];
                 credits = (int)dr.ItemArray[6];
+                var deptId = (int) dr.ItemArray[7];
 
                 //same course but different section OR different quarter is a different machine
                 //different course is a different machine 

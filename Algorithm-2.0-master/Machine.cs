@@ -29,6 +29,7 @@ namespace Scheduler {
         private Job currentJobProcessing;
         [JsonProperty]
         private List<DayTime> dateTime; //datetimes from class?
+
         #endregion
 
         #region Constructors
@@ -129,6 +130,8 @@ namespace Scheduler {
         {
             return dateTime;
         }
+
+       
         #endregion
 
         #region Change Status (Setters)

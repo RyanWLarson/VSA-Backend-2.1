@@ -65,7 +65,7 @@ namespace ScheduleEvaluator
         private void OpenSQLConnection()
         {
 
-            myConnection = new SqlConnection("");
+            myConnection = new SqlConnection();
         }
         #endregion
 
