@@ -463,6 +463,7 @@
     <Compile Include="App_Start\SwaggerConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\CoursesController.cs" />
+    <Compile Include="Controllers\PrerequisiteController.cs" />
     <Compile Include="Controllers\TestController.cs" />
     <Compile Include="Controllers\PreferencesController.cs" />
     <Compile Include="Controllers\RatingController.cs" />
@@ -489,6 +490,10 @@
     <ProjectReference Include="..\Algorithm-2.0-master\Scheduler.csproj">
       <Project>{8c48265c-a39c-49c4-8acd-71b6eb5f7980}</Project>
       <Name>Scheduler</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Models\Models.csproj">
+      <Project>{99f2b340-c755-407f-bffa-d3ca1ec56137}</Project>
+      <Name>Models</Name>
     </ProjectReference>
     <ProjectReference Include="ApiCore\ApiCore.csproj">
       <Project>{6a1ff494-d2f4-4be7-a731-0e1c3b33908b}</Project>

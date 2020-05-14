@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="..\packages\Microsoft.AspNetCore.Mvc.Razor.Extensions.2.1.0\build\netstandard2.0\Microsoft.AspNetCore.Mvc.Razor.Extensions.props" Condition="Exists('..\packages\Microsoft.AspNetCore.Mvc.Razor.Extensions.2.1.0\build\netstandard2.0\Microsoft.AspNetCore.Mvc.Razor.Extensions.props')" />
   <Import Project="..\packages\Microsoft.Extensions.FileProviders.Embedded.2.1.0\build\netstandard2.0\Microsoft.Extensions.FileProviders.Embedded.props" Condition="Exists('..\packages\Microsoft.Extensions.FileProviders.Embedded.2.1.0\build\netstandard2.0\Microsoft.Extensions.FileProviders.Embedded.props')" />
@@ -287,14 +287,17 @@
   <ItemGroup>
     <Compile Include="CourseObject.cs" />
     <Compile Include="ParameterSetObject.cs" />
-    <Compile Include="Preferences.cs" />
+    <Compile Include="PreferenceHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ScheduleModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Algorithm-2.0-master\Scheduler.csproj">
       <Project>{8c48265c-a39c-49c4-8acd-71b6eb5f7980}</Project>
       <Name>Scheduler</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Models\Models.csproj">
+      <Project>{99f2b340-c755-407f-bffa-d3ca1ec56137}</Project>
+      <Name>Models</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

@@ -39,6 +39,11 @@ namespace Scheduler
         private string SummerPreference { get; set; }
         [JsonProperty]
         private int EnrollmentTypeID { get; set; }
+        [JsonProperty]
+        private int PreferredMathStart { get; set; }
+        [JsonProperty]
+        private int PreferredEnglishStart { get; set; }
+
         #endregion
 
         #region Getters
@@ -87,6 +92,15 @@ namespace Scheduler
             return EnrollmentTypeID;
         }
 
+        public int getPreferredMathStart()
+        {
+            return PreferredMathStart;
+        }
+
+        public int getPreferredEnglishStart()
+        {
+            return PreferredEnglishStart;
+        }
         #endregion
     }
 }

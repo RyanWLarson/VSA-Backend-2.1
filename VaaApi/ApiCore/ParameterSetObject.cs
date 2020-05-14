@@ -56,6 +56,12 @@ namespace VaaApi
 
         [JsonProperty("enrollment_type_description")]
         public string EnrollmentType { get; set; }
+
+        [JsonProperty("preferred_english_start")]
+        public string EnglishStart { get; set; }
+
+        [JsonProperty("preferred_math_start")]
+        public string MathStart { get; set; }
     }
 }
 

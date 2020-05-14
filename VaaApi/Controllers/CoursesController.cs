@@ -5,6 +5,7 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using Scheduler;
+using Models;
 
 namespace VaaApi.Controllers
 {
@@ -25,7 +26,7 @@ namespace VaaApi.Controllers
             {
                 Courses = new List<Course>()
             };
-            var query = "select Course.CourseNumber, Course.Title, Course.Description from Course" +
+            var query = "select Course.CourseNumber, Course.Title, Course.CourseID from Course" +
             " join AdmissionRequiredCourses on AdmissionRequiredCourses.CourseID = Course.CourseID" +
             $" where SchoolID = {id}";
             var connection = new DBConnection();
@@ -34,9 +35,9 @@ namespace VaaApi.Controllers
             //Iterating through every row which is a course data object
             foreach (DataRow row in results.Rows)
             {
-                var courseID = row["CourseNumber"].ToString();
+                var courseID = ((int)row["CourseID"]).ToString();
                 var title = row["Title"].ToString();
-                var description = row["Description"].ToString();
+                var description = row["CourseNumber"].ToString();
                 model.Courses.Add(new Course { Description = description, Id = courseID, Title = title });
             }
             //The model holds the attributes of the course dataobjects retrieved and stored in it

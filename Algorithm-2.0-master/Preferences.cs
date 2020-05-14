@@ -147,6 +147,16 @@ namespace Scheduler {
             return prefs[0].getSummer();
         }
 
+        public int getPreferredMathStart()
+        {
+            return prefs[0].getPreferredMathStart();
+        }
+
+        public int getPreferredEnglishhStart()
+        {
+            return prefs[0].getPreferredEnglishStart();
+        }
+
         #endregion
 
         #region Data Interpretation and additional Deserialization

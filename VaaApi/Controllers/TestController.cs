@@ -46,12 +46,16 @@ namespace VaaApi.Controllers
             int timePreferenceID = preferencesObj.getTimePreference();
             int quarterPreferenceID = preferencesObj.getQuarterPreference();
             int enrollmentID = preferencesObj.getEnrollmentID();
+            int mathStartID = preferencesObj.getPreferredMathStart();
+            int englishStartID = preferencesObj.getPreferredEnglishhStart();
             model.Major = connection.ExecuteToString($"select Name from Major where MajorID = {majorID}");
             model.SchoolName = connection.ExecuteToString($"select Name from School where SchoolID = {schoolID}");
             model.JobType = connection.ExecuteToString($"select JobType from JobType where JobTypeID = {jobTypeID}");
             model.TimePreference = connection.ExecuteToString($"select TimePeriod from TimePreference where TimePreferenceID = {timePreferenceID}");
             model.QuarterPreference = connection.ExecuteToString($"select Quarter from Quarter where QuarterID= {quarterPreferenceID}");
             model.EnrollmentType = connection.ExecuteToString($"select EnrollmentDescription from EnrollmentType where EnrollmentTypeID= {enrollmentID}");
+            model.EnglishStart = connection.ExecuteToString($"select CourseNumber from Course where CourseID= {englishStartID}");
+            model.MathStart = connection.ExecuteToString($"select CourseNumber from Course where CourseID= {mathStartID}");
             var response = JsonConvert.SerializeObject(model);
             
             return response;
