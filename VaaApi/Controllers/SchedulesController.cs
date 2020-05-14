@@ -26,12 +26,13 @@ namespace VaaApi.Controllers
             var parameterQuery = $"select ParameterSetId from GeneratedPlan where GeneratedPlanId={id}";
             var parameterId = (int)connection.ExecuteToDT(parameterQuery).Rows[0]["ParameterSetId"];
 
-            var parameterSetQuery= $"select ParameterSet.MajorID, SchoolID, MaxNumberOfQuarters, NumberCoreCoursesPerQuarter, CreditsPerQuarter, SummerPreference, DepartmentId from ParameterSet join Major on ParameterSet.MajorID = Major.MajorID"+
-            $" where ParameterSetId = {parameterId}";
+            var parameterSetQuery = $"select ParameterSet.MajorID, SchoolID, TimePeriod, MaxNumberOfQuarters, NumberCoreCoursesPerQuarter, CreditsPerQuarter, SummerPreference, DepartmentId from ParameterSet join Major on ParameterSet.MajorID = Major.MajorID" +
+                                    $" join TimePreference on TimePreference.TimePreferenceID = ParameterSet.TimePreferenceID" +
+                                    $" where ParameterSetId = {parameterId}";
             var parameterSetResult = connection.ExecuteToDT(parameterSetQuery);
 
             var parameters = Preferences.ConvertFromDatabase(parameterSetResult, parameterId);
-            var query = "select CourseNumber, QuarterID, YearID, Course.CourseId from StudyPlan" +
+            var query = "select CourseNumber, QuarterID, YearID, Course.CourseId, DepartmentId from StudyPlan" +
                         " join course on Course.CourseID = StudyPlan.CourseID" +
                         $" where GeneratedPlanID = {id}";
 

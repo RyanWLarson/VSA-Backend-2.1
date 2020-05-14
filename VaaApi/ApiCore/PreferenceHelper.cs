@@ -60,7 +60,7 @@ namespace ApiCore
 
             int insertedId = 0;
             var DBPlugin = new DBConnection();
-            int rating = schedule.Rating;
+            double rating = schedule.Rating;
             try
             {
                 var schedulerSettings = JsonConvert.SerializeObject(schedule.ScheduleSettings);

@@ -56,7 +56,14 @@ namespace ScheduleEvaluator.ConcreteCriterias
             // Verify that each course's prereqs have been completed
             foreach (CourseNode cn in prereqs)
             {
-                if (!complete.Contains(cn.courseID)) return false;
+                if (cn.courseID != courseId)
+                {
+                    if (!complete.Contains(cn.courseID))
+                    {
+                        return false;
+                    }
+                }
+                
             }
             return true;
         }
@@ -70,8 +77,8 @@ namespace ScheduleEvaluator.ConcreteCriterias
                 resp = await client.GetAsync(
                    $"http://vaacoursenetwork.azurewebsites.net/v1/CourseNetwork?course={id}"
                    );
-                return JsonConvert.DeserializeObject<List<CourseNode>>
-                    (await resp.Content.ReadAsStringAsync());
+                var responseStr = await resp.Content.ReadAsStringAsync();
+                return JsonConvert.DeserializeObject<List<CourseNode>>(responseStr);
             }
             catch (HttpRequestException e)
             {

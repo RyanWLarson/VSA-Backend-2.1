@@ -8,7 +8,7 @@ namespace Scheduler
 {
     public class RatingHelper
     {
-        public static void UpdateWeakLabelScore(int scheduleId, int score)
+        public static void UpdateWeakLabelScore(int scheduleId, double score)
         {
             var connection = new DBConnection();
             var ratingQuery = $"update GeneratedPlan set WeakLabelScore={score} where GeneratedPlanId={scheduleId}";
