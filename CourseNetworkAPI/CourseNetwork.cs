@@ -54,11 +54,11 @@ namespace CourseNetworkAPI
             JObject o1 = JObject.Parse(File.ReadAllText("DBConnectionString.json"));
             string dbConnection = o1.SelectToken("DBConnectionString").ToString();
             SqlConnection cnn = new SqlConnection(dbConnection);
-            prereqs = executeQuery(cnn, "SELECT p.CourseID, MaxCredit as credits, GroupID, PrerequisiteID, PrerequisiteCourseID " +
+            prereqs = executeQuery(cnn, "SELECT p.CourseID, c.CourseNumber as CourseNumber, MaxCredit as credits, GroupID, PrerequisiteID, PrerequisiteCourseID " +
                 "FROM Prerequisite as p " +
                 "LEFT JOIN Course as c ON c.CourseID = p.CourseID " +
                 "FOR JSON PATH");
-            allCourses = executeQuery(cnn, "SELECT CourseID, MaxCredit as credits " +
+            allCourses = executeQuery(cnn, "SELECT CourseID, CourseNumber, MaxCredit as credits " +
                 "FROM Course " +
                 "FOR JSON PATH");
         }
@@ -165,7 +165,7 @@ namespace CourseNetworkAPI
             }
             targetCourse.Add(new CourseNode()); //Adds first element: targetCourse[0]
             targetCourse[0].courseID = targetID; //sets identifying course ID
-
+            targetCourse[0].CourseNumber = courseNetwork[index].CourseNumber;
             //Checks if Course has prerequisites
             if (courseNetwork[index].prereqs != null)
             {
@@ -192,6 +192,7 @@ namespace CourseNetworkAPI
                     //Assign Values
                     targetCourse[groupPath].courseID = targetID;
                     targetCourse[groupPath].groupID = groupPath;
+                    targetCourse[groupPath].CourseNumber = courseNetwork[index].CourseNumber;
                     var coursePrereq = FindShortPath(courseNetwork[index].prereqs[j].PrerequisiteCourseID);
                     courseNetwork[index].prereqs[j].prereqs = coursePrereq;
                     targetCourse[groupPath].prereqs.Add(new CourseNode(courseNetwork[index].prereqs[j], true));
