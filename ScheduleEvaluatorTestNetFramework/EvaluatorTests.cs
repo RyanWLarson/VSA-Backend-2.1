@@ -218,6 +218,63 @@ namespace ScheduleEvaluatorTestFramework
             Assert.AreEqual(0.0, result);
         }
 
+        [TestMethod, TestCategory("PreRequisiteOrder")]
+        public void TestPreRequisiteOrderValid()
+		{
+            ScheduleModel sm = new ScheduleModel
+            {
+                Quarters = new List<Quarter>
+                {
+                    new Quarter {
+                        Courses = new List<Course>
+                        {
+                            new Course
+                            {
+                                Id = 0
+                            }
+                        }
+                    },
+                    new Quarter
+                    {
+                        Courses = new List<Course>
+                        {
+                            new Course
+                            {
+                                Id = 1
+                            }
+                        }
+                    }
+                }
+            };
+            Criteria c = new PreRequisiteOrder(1.0);
+            double result = c.getResult(sm);
+            Assert.AreEqual(1.0, result);
+		}
+
+        [TestMethod, TestCategory("PreRequisiteOrder")]
+        public void TestPreRequisiteOrderInvalid()
+        {
+            ScheduleModel sm = new ScheduleModel
+            {
+                Quarters = new List<Quarter>
+                {
+                    new Quarter
+                    {
+                        Courses = new List<Course>
+                        {
+                            new Course
+                            {
+                                Id = 32
+                            }
+                        }
+                    }
+                }
+            };
+            Criteria c = new PreRequisiteOrder(1.0);
+            double result = c.getResult(sm);
+            Assert.AreEqual(0.0, result);
+        }
+
         // These DB methods ARE NOT TESTED.
         private ScheduleModel getScheduleFromDB(int generatedPlanID)
         {
