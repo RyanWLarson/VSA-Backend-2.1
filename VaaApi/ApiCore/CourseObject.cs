@@ -1,6 +1,13 @@
 ﻿
 namespace ApiCore
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Globalization;
+    using Newtonsoft.Json;
+    using Newtonsoft.Json.Converters;
+    using VaaApi;
+
     public class CourseObject
     {
         public string courses { get; set; }
@@ -16,4 +23,5 @@ namespace ApiCore
         public string school { get; set; }
         public string summer { get; set; }
     }
+
 }

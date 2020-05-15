@@ -10,42 +10,22 @@ using Scheduler;
 namespace VaaApi.Controllers
 {
     using System.Web.Http.Cors;
+    using System.Data;
     using System.Web.Http.Results;
     using ApiCore;
     using Newtonsoft.Json;
     using Newtonsoft.Json.Linq;
-
-    public class PreferencesController : ApiController
+    public class TestController : ApiController
     {
-
-        // POST Api to post the preferences of the user to the db and store it
-        [SwaggerOperation("Post")]
-        [EnableCors(origins: "*", headers: "*", methods: "*")]
-        public string Post(CourseObject content)
-        {
-            try
-            {
-                int id = PreferenceHelper.ProcessPreference(content);
-                return id.ToString();
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e);
-                throw;
-            }
-
-        }
-
-        //GET Api - to get the preferences stored in the db associated with a plan ID
         [EnableCors(origins: "*", headers: "*", methods: "*")]
         public string Get(int id)
         {
-            var query = "select *" +
+            var query = "select *"+
                         $" from ParameterSet JOIN GeneratedPlan on GeneratedPlan.ParameterSetID = ParameterSet.ParameterSetID where GeneratedPlanID = {id} for JSON AUTO";
             var connection = new DBConnection();
             var results = connection.ExecuteToString(query);
-
-            if (results.Equals("[]"))
+           
+            if(results.Equals("[]"))
             {
                 return results;
             }
@@ -77,9 +57,8 @@ namespace VaaApi.Controllers
             model.EnglishStart = connection.ExecuteToString($"select CourseNumber from Course where CourseID= {englishStartID}");
             model.MathStart = connection.ExecuteToString($"select CourseNumber from Course where CourseID= {mathStartID}");
             var response = JsonConvert.SerializeObject(model);
-
+            
             return response;
         }
-
-    }    
+    }
 }

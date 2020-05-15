@@ -134,6 +134,12 @@ namespace Models
         }
     }
 
+    public partial class CourseList
+    {
+        [JsonProperty("courses")]
+        public List<Course> Courses { get; set; }
+    }
+
     public partial class Course
     {
         [JsonProperty("id")]
