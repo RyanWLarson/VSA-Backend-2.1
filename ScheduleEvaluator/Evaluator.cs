@@ -111,5 +111,17 @@ namespace ScheduleEvaluator
             }
             return result / totalWeight;
         }
+
+        // Returns an array of evaluation results for each criteria.
+        public double[] getEvaluationVector(ScheduleModel s)
+        {
+            int numOfCriteria = criterias.Length;
+            double[] results = new double[numOfCriteria];
+            for (int i = 0; i < numOfCriteria; i++)
+            {
+                results[i] = criterias[i].getResult(s);
+            }
+            return results;
+        }
     }
 }

@@ -18,8 +18,10 @@ namespace ScheduleEvaluator.ConcreteCriterias
         {
             Quarter prevQuarter = null;
             int totalGap = 0;
+            int totalMajorCourses = 0;
             foreach (Quarter q in s.Quarters) {
                 if (hasMajorCourse(q, s.PreferenceSet.DepartmentID)) {
+                    totalMajorCourses++;
                     if (prevQuarter == null)
                     {
                         prevQuarter = q;
@@ -36,7 +38,7 @@ namespace ScheduleEvaluator.ConcreteCriterias
                 
                 }
             }
-            return (totalGap > 0 ? 0.0 : 1.0) * weight;
+            return (1 - ((double)totalGap / (double)totalMajorCourses)) * weight;
         }
 
         private Boolean hasMajorCourse(Quarter q, int deptID) {
