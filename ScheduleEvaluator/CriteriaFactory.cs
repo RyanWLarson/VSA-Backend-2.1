@@ -52,6 +52,8 @@ namespace ScheduleEvaluator
                     Criterias[i] = new PreRequisiteOrder(w);
                 else if (ct == CritTyp.TimeOfDay)
                     Criterias[i] = new TimeOfDay(w);
+                else if (ct == CritTyp.EnglishClassStart)
+                    Criterias[i] = new EnglishClassStart(w);
                 else
                     throw new ArgumentException("Illegal Criteria Type");
             }
@@ -68,6 +70,7 @@ namespace ScheduleEvaluator
             if (criteria.Equals("MaxQuarters")) return CritTyp.MaxQuarters;
             if (criteria.Equals("PreRequisiteOrder")) return CritTyp.PreRequisiteOrder;
             if (criteria.Equals("TimeOfDay")) return CritTyp.TimeOfDay;
+            if (criteria.Equals("EnglishClassStart")) return CritTyp.EnglishClassStart;
             return CritTyp.Invalid;
         }
     }

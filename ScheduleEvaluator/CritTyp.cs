@@ -18,6 +18,7 @@ namespace ScheduleEvaluator
         MaxQuarters,
         PreRequisiteOrder,
         TimeOfDay,
+        EnglishClassStart,
         Invalid
     };
 

@@ -10,6 +10,7 @@ using System.Data;
 using ScheduleEvaluator.ConcreteCriterias;
 using Newtonsoft.Json.Linq;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
 
 namespace ScheduleEvaluatorTestFramework
 {
@@ -67,6 +68,19 @@ namespace ScheduleEvaluatorTestFramework
             }).GetAwaiter().GetResult();
             // Probably some better way to do this
 
+        }
+
+        [TestMethod, TestCategory("HTTP")]
+        public void TestMultipleCourseIDHTTPRequest() {
+            List<int> temp = new List<int>();
+            for (int i = 0; i < 10; i++)
+            {
+                temp.Add(i);
+
+            }
+            string input = JsonConvert.SerializeObject(temp);
+            Console.WriteLine(input);
+            
         }
         
         [TestMethod, TestCategory("MathBreaks")]
