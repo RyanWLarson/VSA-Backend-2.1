@@ -40,7 +40,7 @@ namespace ScheduleEvaluator.ConcreteCriterias
 
                 }
             }
-            return (1 - (totalGap / totalMathCourses)) * weight;
+            return (1 - ((double)totalGap / (double)totalMathCourses)) * weight;
         }
 
         private Boolean hasMathCourse(Quarter q)

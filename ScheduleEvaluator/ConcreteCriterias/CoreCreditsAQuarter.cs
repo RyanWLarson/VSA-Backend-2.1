@@ -31,7 +31,7 @@ namespace ScheduleEvaluator.ConcreteCriterias
                 }
             }
             // May we want to change this binary return.
-            return (1 - (numQuartersOver / s.Quarters.Count)) * weight;
+            return (1 - ((double)numQuartersOver / (double)s.Quarters.Count)) * weight;
         }
     }
 }

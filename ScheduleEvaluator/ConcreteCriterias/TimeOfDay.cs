@@ -37,7 +37,7 @@ namespace ScheduleEvaluator.ConcreteCriterias
                 }
             }
             // May we want to change this binary return.
-            return (1 - (numOutsideTimePref / totalCourses)) * weight;
+            return (1 - ((double)numOutsideTimePref / (double)totalCourses)) * weight;
         }
     }
 }

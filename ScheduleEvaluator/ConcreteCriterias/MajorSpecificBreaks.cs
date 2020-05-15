@@ -39,7 +39,7 @@ namespace ScheduleEvaluator.ConcreteCriterias
                 
                 }
             }
-            return (1 - (totalGap / totalMajorCourses)) * weight;
+            return (1 - ((double)totalGap / (double)totalMajorCourses)) * weight;
         }
 
         private Boolean hasMajorCourse(Quarter q, int deptID) {
