@@ -117,6 +117,46 @@ namespace Scheduler {
         {
             return prefs[0].getCoreCourse();
         }
+
+        public int getTimePreference()
+        {
+            return prefs[0].getTimeP();
+        }
+
+        public int getJobType()
+        {
+            return prefs[0].getJobType();
+        }
+
+        public int getParamId()
+        {
+            return prefs[0].getID();
+        }
+        public int getQuarterPreference()
+        {
+            return prefs[0].getQuarterP();
+        }
+
+        public int getEnrollmentID()
+        {
+            return prefs[0].getEnrollment();
+        }
+
+        public string getSummerPref()
+        {
+            return prefs[0].getSummer();
+        }
+
+        public int getPreferredMathStart()
+        {
+            return prefs[0].getPreferredMathStart();
+        }
+
+        public int getPreferredEnglishhStart()
+        {
+            return prefs[0].getPreferredEnglishStart();
+        }
+
         #endregion
 
         #region Data Interpretation and additional Deserialization

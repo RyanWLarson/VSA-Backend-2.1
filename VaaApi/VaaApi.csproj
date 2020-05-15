@@ -462,6 +462,10 @@
   <ItemGroup>
     <Compile Include="App_Start\SwaggerConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\CoursesController.cs" />
+    <Compile Include="Controllers\PrerequisiteController.cs" />
+    <Compile Include="Controllers\SchoolsController.cs" />
+    <Compile Include="Controllers\TestController.cs" />
     <Compile Include="Controllers\PreferencesController.cs" />
     <Compile Include="Controllers\RatingController.cs" />
     <Compile Include="Controllers\SchedulesController.cs" />
@@ -472,7 +476,10 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
+    <None Include="Properties\PublishProfiles\vaaapi - FTP.pubxml" />
+    <None Include="Properties\PublishProfiles\vaaapi - ReadOnly - FTP.pubxml" />
     <None Include="Properties\PublishProfiles\vaaapi - Web Deploy.pubxml" />
+    <None Include="Properties\PublishProfiles\WebserverIISProfile.pubxml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

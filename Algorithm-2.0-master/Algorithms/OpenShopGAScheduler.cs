@@ -50,7 +50,7 @@
                 AddPrerequisites(job, jobs, preferShortest, 0);
             }
 
-            return FindBestSchedule(jobs, 30, 200, 60, this.CurrentBestFit);
+            return FindBestSchedule(jobs, 4, 100, 25, this.CurrentBestFit);
         }
 
         public Schedule FindBestSchedule(SortedDictionary<int, List<Job>> jobs, int level = 20, int populationSize = 100, int topPercentToKeep = 80, OpenShopGASchedulerSettings currentBestFit = null)
@@ -77,12 +77,12 @@
             return fittest.OrderByDescending(s => s.Rating).First();
         }
 
-        private int GetRating(Schedule sched)
+        private double GetRating(Schedule sched)
         {
             var scheduleModel = sched.ConvertToScheduleModel();
             scheduleModel.PreferenceSet = this.Preferences;
             var eval = new Evaluator();
-            return (int)eval.evalaute(scheduleModel);
+            return eval.evalaute(scheduleModel);
         }
 
         public List<Schedule> SelectFittest(List<Schedule> populationSet, int level = 20, int topPercentToKeep = 95, OpenShopGASchedulerSettings currentBestFit = null)
@@ -153,7 +153,7 @@
         {
             var random = new Random();
             var lowest = parent1.Chromosome.Count < parent2.Chromosome.Count ? parent1.Chromosome.Count : parent2.Chromosome.Count;
-            if (parent1.Chromosome.Count <= 0) return new List<OpenShopGASchedulerSettings>(){parent1};
+            if (parent1.Chromosome.Count <= 0) return new List<OpenShopGASchedulerSettings>() { parent1 };
             var crossOvers = new List<OpenShopGASchedulerSettings>();
             for (int i = 0; i < count; i++)
             {
@@ -199,11 +199,7 @@
             foreach (var kvp in jobs)
             {
                 IEnumerable<Job> orderedJobs = kvp.Value;
-                if (mutate)
-                {
-                    //shuffle the order of courses for each level
-                    orderedJobs = kvp.Value.Shuffle();
-                }
+
 
                 foreach (var job in orderedJobs)
                 {
@@ -214,7 +210,11 @@
                     ScheduleCourse(job);
                 }
             }
-
+            if (mutate)
+            {
+                //shuffle the order of courses for each level
+                courseDna = courseDna.Shuffle().ToList();
+            }
             return courseDna;
         }
 
@@ -225,9 +225,6 @@
                 ScheduleCourse(job);
             }
         }
-
-
-
 
         #endregion
 

@@ -73,7 +73,13 @@ namespace ScheduleEvaluator.ConcreteCriterias
             // Verify that each course's prereqs have been completed
             foreach (CourseNode course in prereqs)
             {
-                if (!complete.Contains(course.courseID)) return false;
+                if (cn.courseID != courseId)
+                {
+                    if (!complete.Contains(cn.courseID))
+                    {
+                        return false;
+                    }
+                }
             }
             return true;
         }

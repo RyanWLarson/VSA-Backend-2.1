@@ -29,6 +29,8 @@ namespace Scheduler {
         private int credits;
         [JsonIgnore]
         private bool coreCourse;
+        [JsonIgnore]
+        private int departmentId;
         #endregion
 
         #region Constructor
@@ -69,9 +71,31 @@ namespace Scheduler {
             this.credits = credits;
             coreCourse = coreClass;
         }
+
+        public Job(int id, int credits, bool coreClass, int departmentId)
+        {
+            this.id = id;
+            scheduled = false;
+            quarterScheduled = -1;
+            yearScheduled = -1;
+            prerequisitesScheduled = false;
+            this.credits = credits;
+            coreCourse = coreClass;
+            this.departmentId = departmentId;
+        }
         #endregion
 
         #region Getters
+
+        //------------------------------------------------------------------------------
+        // 
+        // returns full list list dateTime
+        // 
+        //------------------------------------------------------------------------------
+        public int GetDepartmentID()
+        {
+            return departmentId;
+        }
         //------------------------------------------------------------------------------
         // boolean for scheduled or not
         //------------------------------------------------------------------------------

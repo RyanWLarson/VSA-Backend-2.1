@@ -37,8 +37,8 @@ namespace DataGenerator
             var coursePrefList = new List<CourseObject>();
             //var schools = new List<string>(){ "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16" };
             //var majors = new List<string>(){ "1", "2", "3", "4", "6", "7", "8", "9", "10", "11", "12", "13", "14", "16", "17", "18", "19", "20", "21", "22", "23", "24", "26", "27", "28", "29", "30", "31", "32" };
-            var schools = new List<string>(){"6"};
-            var majors = new List<string>(){"22"};
+            var schools = new List<string>(){"1"};
+            var majors = new List<string>(){"1"};
             foreach (string school in schools)
             {
                 foreach (string major in majors)
@@ -55,10 +55,10 @@ namespace DataGenerator
                         summer = "N"
                     };
                     coursePrefList.Add(courseObj);
-                    VaryEnrollment(courseObj, coursePrefList);
-                    VaryJob(courseObj, coursePrefList);
-                    VaryCredits(courseObj, coursePrefList);
-                    VaryMaxCreditsPerQuarter(courseObj, coursePrefList);
+                    //VaryEnrollment(courseObj, coursePrefList);
+                    //VaryJob(courseObj, coursePrefList);
+                    //VaryCredits(courseObj, coursePrefList);
+                    //VaryMaxCreditsPerQuarter(courseObj, coursePrefList);
                     GeneratePlan(coursePrefList, insertedList);
                 }
             }
@@ -92,7 +92,7 @@ namespace DataGenerator
             var schedule = new List<int>() { };
             var connection = new DBConnection();
             var eval = new Evaluator();
-            var scheduleQuery = $"select GeneratedPlanId from GeneratedPlan";
+            var scheduleQuery = $"select GeneratedPlanId from GeneratedPlan where GeneratedPlanId > 600";
             var schedules = connection.ExecuteToDT(scheduleQuery);
             foreach (DataRow schedulesRow in schedules.Rows)
             {
@@ -112,7 +112,7 @@ namespace DataGenerator
 
                 var parameters = Preferences.ConvertFromDatabase(parameterSetResult, parameterId);
 
-                var query = "select CourseNumber, QuarterID, YearID, Course.CourseId from StudyPlan" +
+                var query = "select CourseNumber, QuarterID, YearID, Course.CourseId, Course.DepartmentID from StudyPlan" +
                             " join course on Course.CourseID = StudyPlan.CourseID" +
                             $" where GeneratedPlanID = {scheduleId}";
 
@@ -120,7 +120,7 @@ namespace DataGenerator
                 var model = ScheduleModel.ConvertFromDatabase(results, scheduleId, parameters);
                 var rating = eval.evalaute(model);
 
-                RatingHelper.UpdateWeakLabelScore(scheduleId, (int)rating);
+                RatingHelper.UpdateWeakLabelScore(scheduleId, rating);
 
             }
         }
