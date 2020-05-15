@@ -240,21 +240,23 @@ namespace ScheduleEvaluatorTestFramework
                 Quarters = new List<Quarter>
                 {
                     new Quarter {
+                        Year = 0,
                         Courses = new List<Course>
                         {
                             new Course
                             {
-                                Id = 0
+                                Id = 0.ToString()
                             }
                         }
                     },
                     new Quarter
                     {
+                        Year = 1,
                         Courses = new List<Course>
                         {
                             new Course
                             {
-                                Id = 1
+                                Id = 1.ToString()
                             }
                         }
                     }
@@ -274,11 +276,12 @@ namespace ScheduleEvaluatorTestFramework
                 {
                     new Quarter
                     {
+                        Year = 0,
                         Courses = new List<Course>
                         {
                             new Course
                             {
-                                Id = 32
+                                Id = 32.ToString()
                             }
                         }
                     }
