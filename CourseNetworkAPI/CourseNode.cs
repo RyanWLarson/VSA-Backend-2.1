@@ -24,6 +24,8 @@ namespace CourseNetworkAPI
     {
         #region Structure Variables
         public int courseID { get; set; } //Represents the Unique ID number for a course
+        public string CourseNumber { get; set; } // If there is an issue with moving this object in and out of JSON it is most likely this field
+                                                 // Feel free to comment this line out and any other areas where this field is used. OR contact Iswarya or CJ
         public int credits { get; set; }
         public int groupID { get; set; } //Represents the Group ID for the Course
         public int prerequisiteID { get; set; } //Represents the Unique ID number for a Prerequisite Course
@@ -41,6 +43,7 @@ namespace CourseNetworkAPI
             prerequisiteID = 0;
             prereqs = null;
             credits = 0;
+            CourseNumber = "";
         }
         #endregion]
 
@@ -49,6 +52,7 @@ namespace CourseNetworkAPI
         {
             courseID = temp.courseID;
             groupID = temp.groupID;
+            CourseNumber = temp.CourseNumber;
             prerequisiteID = temp.prerequisiteID;
             PrerequisiteCourseID = temp.PrerequisiteCourseID;
             credits = temp.credits;

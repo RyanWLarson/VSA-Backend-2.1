@@ -10,6 +10,7 @@ using System.Data;
 using ScheduleEvaluator.ConcreteCriterias;
 using Newtonsoft.Json.Linq;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
 
 namespace ScheduleEvaluatorTestFramework
 {
@@ -67,6 +68,19 @@ namespace ScheduleEvaluatorTestFramework
             }).GetAwaiter().GetResult();
             // Probably some better way to do this
 
+        }
+
+        [TestMethod, TestCategory("HTTP")]
+        public void TestMultipleCourseIDHTTPRequest() {
+            List<int> temp = new List<int>();
+            for (int i = 0; i < 10; i++)
+            {
+                temp.Add(i);
+
+            }
+            string input = JsonConvert.SerializeObject(temp);
+            Console.WriteLine(input);
+            
         }
         
         [TestMethod, TestCategory("MathBreaks")]
@@ -215,6 +229,66 @@ namespace ScheduleEvaluatorTestFramework
             };
             Criteria mq = new MaxQuarters(1.0);
             double result = mq.getResult(sm);
+            Assert.AreEqual(0.0, result);
+        }
+
+        [TestMethod, TestCategory("PreRequisiteOrder")]
+        public void TestPreRequisiteOrderValid()
+		{
+            ScheduleModel sm = new ScheduleModel
+            {
+                Quarters = new List<Quarter>
+                {
+                    new Quarter {
+                        Year = 0,
+                        Courses = new List<Course>
+                        {
+                            new Course
+                            {
+                                Id = 0.ToString()
+                            }
+                        }
+                    },
+                    new Quarter
+                    {
+                        Year = 1,
+                        Courses = new List<Course>
+                        {
+                            new Course
+                            {
+                                Id = 1.ToString()
+                            }
+                        }
+                    }
+                }
+            };
+            Criteria c = new PreRequisiteOrder(1.0);
+            double result = c.getResult(sm);
+            Assert.AreEqual(1.0, result);
+		}
+
+        [TestMethod, TestCategory("PreRequisiteOrder")]
+        public void TestPreRequisiteOrderInvalid()
+        {
+            ScheduleModel sm = new ScheduleModel
+            {
+                Quarters = new List<Quarter>
+                {
+                    new Quarter
+                    {
+                        Year = 0,
+                        Courses = new List<Course>
+                        {
+                            new Course
+                            {
+                                Id = 32.ToString()
+                            }
+                        }
+                    }
+                }
+            };
+            Criteria c = new PreRequisiteOrder(1.0);
+            double result = c.getResult(sm);
             Assert.AreEqual(0.0, result);
         }
 
