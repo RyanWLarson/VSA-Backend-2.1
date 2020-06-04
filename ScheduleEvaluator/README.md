@@ -16,7 +16,9 @@ To be used in the evaluate function, the constructor builds an array of type `Cr
 
 This object has one method `double result = evaluate(Schedule s)` where the Schedule being passed in is the schedule to be evaluated and result is the score determined by the algorithm. This function delegates all of the heavy lifting to the `Criteria` object, their interface requires them to implement a `getScore()` function.  This function once called on, returns the score for that given schedule (_Scaled to the weight it was previously given_). 
 
-Evaluate lets each `Criteria` object visit the schedule and sum up the scores and that is the result.
+Evaluate 
+
+__Outputs:__ The Evaluator has two possible outputs. The first, evaluate, sums the scores of each 'Criteria' object's getResult(). This option provides an overall score for the schedule model. The second option is getEvaluationVector; instead of returning the sum of Criteria results, this option outputs an array of individual evaluation results for each 'Criteria' object. This array can be used as a 'metrics vector' for the platform.
 
 (_May need to consider what to do if there is an edge case such that is a certain criteria fails the schedule should receive a 0_) 
 
@@ -52,16 +54,16 @@ _(All of the criteria outlined below has been derived from the Weak Labeling Cri
 
 | Criteria            | Explanation                                                  |
 | ------------------- | :----------------------------------------------------------- |
-| AllRequiredPrereqs  | Validates that all required degree prerequisites are included in a schedule.|
-| CoreClassesLastYear | Validates that the number of core classes scheduled for the last quarter is at or below the student preference. |
-| CoreCreditsAQuarter | Validates that the number of core credits taken each quarter are at or below the student preference. |
-| ElectiveRelevancy   | Validates that the electives taken are relevant to major course work? |
-| EnglishTimes        | Validates that the first English Course taken matches the preferred English Course |
-| MajorSpecificBreaks | Validates that the first Math Course taken matches the preferred Math Course |
-| MathBreaks          | Validates that there are no breaks in any math sequence      |
-| MaxQuarters         | Validates that the number of quarters scheduled do not exceed the preferred number of quarters scheduled. |
-| PreprequisiteOrder  | Validates that no course is scheduled before all of the prerequisites are satisfied. |
-| TimeOfDay           | Validates that all courses are scheduled at the preferred time of day. |
+| AllRequiredPrereqs  | Validates that all required prerequisites for a major are included in a schedule.|
+| CoreClassesLastYear | Evaluates whether the number of core classes scheduled for the last quarter are less than or equal to the student preference. |
+| CoreCreditsAQuarter | Evaluates whether the number of core credits taken each quarter are less than or equal to the student preference. |
+| ElectiveRelevancy   | Evaluates whether the electives scheduled are relevant to the student's major and degree coursework. |
+| EnglishTimes        | Validates that the first English Course taken matches the preferred English Course. |
+| MajorSpecificBreaks | Validates that the first Math Course taken matches the preferred Math Course. |
+| MathBreaks          | Evaluates the length and number of breaks in any math sequence. |
+| MaxQuarters         | Validates that the number of quarters scheduled does not exceed the preferred number of quarters required to complete a degree. |
+| PreprequisiteOrder  | Validates that no course is scheduled before each of the course's prerequisites are satisfied. |
+| TimeOfDay           | Evaluates whether scheduled courses take place during the preferred time of day. |
 
 ## Schedule Model
 
