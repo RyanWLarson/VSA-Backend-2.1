@@ -16,8 +16,6 @@ To be used in the evaluate function, the constructor builds an array of type `Cr
 
 This object has one method `double result = evaluate(Schedule s)` where the Schedule being passed in is the schedule to be evaluated and result is the score determined by the algorithm. This function delegates all of the heavy lifting to the `Criteria` object, their interface requires them to implement a `getScore()` function.  This function once called on, returns the score for that given schedule (_Scaled to the weight it was previously given_). 
 
-Evaluate 
-
 __Outputs:__ The Evaluator has two possible outputs. The first, evaluate, sums the scores of each 'Criteria' object's getResult(). This option provides an overall score for the schedule model. The second option is getEvaluationVector; instead of returning the sum of Criteria results, this option outputs an array of individual evaluation results for each 'Criteria' object. This array can be used as a 'metrics vector' for the platform.
 
 (_May need to consider what to do if there is an edge case such that is a certain criteria fails the schedule should receive a 0_) 
