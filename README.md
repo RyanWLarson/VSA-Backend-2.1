@@ -14,3 +14,9 @@ Open Shop Scheduler implementation allows for optimizing more than just the make
 
 # Longest Path Scheduler
 The longest path scheduler is inspired from the Shortest Job First CPU scheduling algorithm. For this algorithm, we generate a priority queue of all prerequisites where we put the tail prerequisite at the highest priority. This ensures we’re prioritizing courses that have a long tail because those are the hardest to ensure continuity and minimize sequence breaks. Once this priority queue has been established, we schedule the jobs in the quarters. 
+
+# Genetic Algorithm
+Genetic algorithm is a search method for finding the best solution. We can apply genetic algorithm on top of the scheduling algorithms to identify the best schedules meeting student preferences. We use the full schedule as the gene sequence and modify starting points for each quarter to generate the mutations.
+
+# Alternate Schedule Recommendation
+With the data generation, labelling and Genetic Algorithm changes, we now have a good core system for generating and rating schedules for the various majors and schools listed in the database. Given this data, we can use some Machine Learning techniques such as k-Means clustering to find schedules that are clustered together. We can use this cluster to identify close by neighbors i.e. schools and majors that have similar course DNAs.
