@@ -61,13 +61,22 @@ namespace ScheduleEvaluator
             return dt;
         }
 
+        // 'ExecuteToString' essentially means:
+        //      - execute SQL command
+        //      - store execution result in a StringBuilder object (mutable string of chars) 
+        //      - return the string data from the StringBuilder object
         public string ExecuteToString(string query)
         {
-
             OpenSQLConnection();
+            
+            // construct an SQL command object
             SqlCommand cmd = new SqlCommand(query, myConnection);
             myConnection.Open();
             var result = new StringBuilder();
+            
+            // 'ExecuteReader()' (see .NET docs):
+            // sends CommandText to the Connection, builds a SqlDataReader,
+            // and returns this reader WITH execution results/values/data.
             var reader = cmd.ExecuteReader();
             if (!reader.HasRows)
             {
@@ -75,11 +84,17 @@ namespace ScheduleEvaluator
             }
             else
             {
+                // 'reader.Read()' advances the SqlDataReader's current row
+                // to the next row;
                 while (reader.Read())
                 {
+                    // 'reader.GetValue(i)' returns the data from the
+                    // "ith" column in the CURRENT ROW that <reader> points to
                     result.Append(reader.GetValue(0).ToString());
                 }
             }
+            
+            // cleanup and return the result's string data
             myConnection.Close();
             return result.ToString();
         }
