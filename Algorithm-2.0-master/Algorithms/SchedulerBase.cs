@@ -69,7 +69,8 @@ namespace Scheduler.Algorithms
         {
             attendSummer = summerIntent;
             this.quarters = quartersDeclared;
-            years = quarters / 4;
+            // years = quarters / 4;
+            years = quarters / ((summerIntent) ? 4 : 3); // takes the summer into account
             yearlength = MaxYearLength;
 
         }
